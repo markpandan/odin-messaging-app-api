@@ -23,6 +23,13 @@ exports.getUserByUsername = async (username) => {
     where: {
       username,
     },
+    select: {
+      username: true,
+      email: true,
+      firstname: true,
+      lastname: true,
+      password: true,
+    },
   });
 
   return user;
