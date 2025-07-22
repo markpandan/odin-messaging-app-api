@@ -11,4 +11,6 @@ router.get("/:userId", controller.getUser);
 
 router.put("/:userId", controller.putUser);
 
+router.get("/:userId/messages", controller.messageList);
+
 module.exports = router;

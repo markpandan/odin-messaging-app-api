@@ -24,11 +24,8 @@ model Users {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ChatA Chats[] @relation("ChatUserA")
-  ChatB Chats[] @relation("ChatUserB")
-
-  sentMessages     Messages[] @relation("Sender")
-  receivedMessages Messages[] @relation("Receiver")
+  chats    Chats[]
+  messages Messages[]
 }
 
 model Chats {
@@ -37,15 +34,8 @@ model Chats {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userA   Users  @relation("ChatUserA", fields: [userAId], references: [id])
-  userAId String
-
-  userB   Users  @relation("ChatUserB", fields: [userBId], references: [id])
-  userBId String
-
-  Messages Messages[]
-
-  @@unique([userAId, userBId])
+  users    Users[]
+  messages Messages[]
 }
 
 model Messages {
@@ -55,12 +45,9 @@ model Messages {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  chat   Chats  @relation(fields: [chatId], references: [id])
+  chat   Chats  @relation(fields: [chatId], references: [id], onDelete: Cascade)
   chatId String
 
-  sender   Users  @relation("Sender", fields: [senderId], references: [id])
+  sender   Users  @relation(fields: [senderId], references: [id], onDelete: Cascade)
   senderId String
-
-  receiver   Users  @relation("Receiver", fields: [receiverId], references: [id])
-  receiverId String
 }

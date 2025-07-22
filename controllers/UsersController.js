@@ -1,6 +1,7 @@
 const issueToken = require("../lib/jwtUtils");
-const db = require("../prisma/queries");
+const db = require("../prisma/userQueries");
 const verifyLogin = require("../lib/verifyLogin");
+const { isAuth } = require("../lib/authUtils");
 
 exports.userLogin = async (req, res) => {
   const { username, password } = req.body;
@@ -38,3 +39,14 @@ exports.userSignup = async (req, res) => {
 exports.getUser = (req, res) => {};
 
 exports.putUser = (req, res) => {};
+
+exports.messageList = [
+  isAuth,
+  async (req, res) => {
+    const { userId } = req.params;
+
+    const chats = await db.getMessageListById(userId);
+
+    res.json({ output: chats });
+  },
+];

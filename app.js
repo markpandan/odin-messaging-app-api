@@ -14,6 +14,9 @@ app.use(express.urlencoded({ extended: false }));
 const usersRoute = require("./routes/UsersRoute");
 app.use("/users", usersRoute);
 
+const chatsRoute = require("./routes/ChatsRoute");
+app.use("/chats", chatsRoute);
+
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
