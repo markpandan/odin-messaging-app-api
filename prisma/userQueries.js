@@ -35,13 +35,22 @@ exports.getUserByUsername = async (username) => {
 };
 
 exports.getUserById = async (userId) => {
-  const user = await prisma.users.findUnique({
+  const query = await prisma.users.findUnique({
     where: {
       id: userId,
     },
   });
 
-  return user;
+  return query;
+};
+
+exports.updateUser = async (userId, body) => {
+  await prisma.users.update({
+    where: {
+      id: userId,
+    },
+    data: { ...body },
+  });
 };
 
 exports.getMessageListById = async (userId) => {

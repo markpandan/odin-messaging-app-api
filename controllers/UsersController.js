@@ -36,9 +36,44 @@ exports.userSignup = async (req, res) => {
   }
 };
 
-exports.getUser = (req, res) => {};
+exports.getUser = [
+  isAuth,
+  async (req, res) => {
+    const { userId } = req.params;
 
-exports.putUser = (req, res) => {};
+    try {
+      const user = await db.getUserById(userId);
+      res.json({ output: user });
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).json({ message: error.message });
+    }
+  },
+];
+
+exports.putUser = [
+  isAuth,
+  async (req, res) => {
+    const { userId } = req.params;
+    const { firstname, lastname, username, email } = req.body;
+
+    // TODO: Provide a new JWT token to properly update the users account
+    try {
+      await db.updateUser(userId, {
+        firstname,
+        lastname,
+        username,
+        email,
+      });
+      res.json({ message: "User account updated" });
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).json({ message: error.message });
+    }
+  },
+];
 
 exports.messageList = [
   isAuth,
