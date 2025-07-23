@@ -52,6 +52,17 @@ exports.getUser = [
   },
 ];
 
+exports.getOutsideUsers = [
+  isAuth,
+  async (req, res) => {
+    const { id } = req.user;
+
+    const users = await db.getOutsideUsersById(id);
+
+    res.json({ output: users });
+  },
+];
+
 exports.putUser = [
   isAuth,
   async (req, res) => {

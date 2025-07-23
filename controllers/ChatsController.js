@@ -43,3 +43,15 @@ exports.postChatMessage = [
     }
   },
 ];
+
+exports.postChatNew = [
+  isAuth,
+  async (req, res) => {
+    const { id: userId } = req.user;
+    const { ids } = req.body;
+
+    await db.postNewChat([userId, ...ids]);
+
+    res.json({ message: "Chat created" });
+  },
+];

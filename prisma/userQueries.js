@@ -45,11 +45,12 @@ exports.getUserById = async (userId) => {
 };
 
 exports.updateUser = async (userId, body) => {
+  const { firstname, lastname, username, email } = body;
   await prisma.users.update({
     where: {
       id: userId,
     },
-    data: { ...body },
+    data: { firstname, lastname, username, email },
   });
 };
 
@@ -92,4 +93,28 @@ exports.getMessageListById = async (userId) => {
   });
 
   return [...query.chats];
+};
+
+exports.getOutsideUsersById = async (userId) => {
+  const query = await prisma.users.findMany({
+    include: {
+      password: false,
+    },
+    where: {
+      NOT: {
+        id: userId,
+      },
+      chats: {
+        none: {
+          users: {
+            some: {
+              id: userId,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return query;
 };

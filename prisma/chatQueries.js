@@ -27,3 +27,15 @@ exports.postChatNewMessage = async (chatId, senderId, message) => {
     },
   });
 };
+
+exports.postNewChat = async (ids) => {
+  ids = ids.map((id) => {
+    return { id };
+  });
+
+  await prisma.chats.create({
+    data: {
+      users: { connect: ids },
+    },
+  });
+};
