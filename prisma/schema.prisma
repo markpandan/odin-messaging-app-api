@@ -50,4 +50,18 @@ model Messages {
 
   sender   Users  @relation(fields: [senderId], references: [id], onDelete: Cascade)
   senderId String
+
+  file Files?
+}
+
+model Files {
+  id   String @id @default(uuid())
+  name String
+  size Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  message   Messages @relation(fields: [messageId], references: [id])
+  messageId String   @unique
 }

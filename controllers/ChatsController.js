@@ -1,3 +1,5 @@
+const { uploadToCloud } = require("../config/cloudinary");
+const { singleFileUpload } = require("../config/mutler");
 const { isAuth } = require("../lib/authUtils");
 const db = require("../prisma/chatQueries");
 
@@ -29,12 +31,15 @@ exports.getChatContent = [
 
 exports.postChatMessage = [
   isAuth,
+  singleFileUpload("image"),
   async (req, res) => {
     const { chatId } = req.params;
     const { message, senderId } = req.body;
 
     try {
-      await db.postChatNewMessage(chatId, senderId, message);
+      await db.postChatNewMessage(chatId, senderId, message, req.file);
+      await uploadToCloud(req.file.path, req.file.destination);
+
       res.json({ message: "Message Submitted" });
     } catch (error) {
       console.error(error);
