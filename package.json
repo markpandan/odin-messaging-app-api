@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npx prisma migrate dev --name init",
     "server": "node --watch app.js"
   },
   "repository": {

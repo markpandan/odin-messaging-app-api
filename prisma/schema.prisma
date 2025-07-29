@@ -58,6 +58,7 @@ model Files {
   id   String @id @default(uuid())
   name String
   size Int
+  url  String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

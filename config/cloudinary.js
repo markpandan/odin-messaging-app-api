@@ -7,14 +7,10 @@ async function uploadToCloud(filePath, destination) {
   const filename = path.parse(filePath).name;
 
   const databaseFolder = process.env.CLOUDINARY_DATABASE_FOLDER;
-  await cloudinary.uploader
-    .upload(filePath, {
-      public_id: filename,
-      asset_folder: databaseFolder + "/" + destination,
-    })
-    .then((result) => {
-      console.log("Success", JSON.stringify(result, null, 2));
-    });
+  return await cloudinary.uploader.upload(filePath, {
+    public_id: filename,
+    asset_folder: databaseFolder + "/" + destination,
+  });
 }
 
 module.exports = { uploadToCloud };

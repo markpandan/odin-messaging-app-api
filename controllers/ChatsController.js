@@ -37,8 +37,14 @@ exports.postChatMessage = [
     const { message, senderId } = req.body;
 
     try {
+      if (req.file) {
+        const fileUrl = (
+          await uploadToCloud(req.file.path, req.file.destination)
+        ).secure_url;
+        req.file["url"] = fileUrl;
+      }
+
       await db.postChatNewMessage(chatId, senderId, message, req.file);
-      await uploadToCloud(req.file.path, req.file.destination);
 
       res.json({ message: "Message Submitted" });
     } catch (error) {

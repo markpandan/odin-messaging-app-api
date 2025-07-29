@@ -1,3 +1,4 @@
+const { cloudinaryUrl } = require("../lib/pathUtils");
 const prisma = require("./query");
 const path = require("node:path");
 
@@ -9,6 +10,9 @@ exports.getChatById = async (chatId) => {
     include: {
       users: true,
       messages: {
+        include: {
+          file: true,
+        },
         orderBy: {
           createdAt: "asc",
         },
@@ -33,6 +37,7 @@ exports.postChatNewMessage = async (chatId, senderId, message, file) => {
             id: basename,
             name: file.originalname,
             size: file.size,
+            url: file.url,
           },
         },
       },
