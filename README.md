@@ -2,6 +2,8 @@
 
 This repository was made as an API for the Messaging App Project: https://www.theodinproject.com/lessons/nodejs-messaging-app
 
+The frontend of this application was located on a separate GitHub repository: https://github.com/markpandan/odin-messaging-app
+
 ## Functionality
 
 The API was made to secure messages, and uploaded images, while verifying the validity of created, and logged accounts. The following notes are highlights of the libraries and/or APIs mainly used:
