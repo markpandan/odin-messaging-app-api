@@ -31,7 +31,7 @@ The following environmental variables are required to make the app running. They
 
 > **NOTE:** _The optional variables are still required to be placed on file. Just leave an empty string to avoid any potential compilation errors._
 
-Once done, build the respective tables based on the `schema.prisma` file by migrating it to your created database. The game images, and entities will be populated as well. This can be easily done by running the respective code below:
+Once done, build the respective tables based on the `schema.prisma` file by migrating it to your created database. This can be easily done by running the respective code below:
 
 ```
 npm run build
